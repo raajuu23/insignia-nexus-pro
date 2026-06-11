@@ -34,13 +34,12 @@ function About() {
       <section className="mx-auto max-w-7xl px-4 py-16">
         <div className="grid gap-6 md:grid-cols-4">
           {[
-            [ShieldCheck, "Regulation Grade", "Every item meets official specifications and durability standards."],
-            [Target, "Precision Tailoring", "Accurate fits for all ranks, sizes and unit requirements."],
-            [Users, "Trusted Supplier", "Serving departments, NCC wings and agencies across Gujarat."],
-            [Award, "10+ Years", "A decade of reliable service and a 4.4★ rating."],
-          ].map(([Icon, title, desc], i) => (
-            <div key={i} className="rounded-xl border border-border bg-card p-6 shadow-card">
-              {/* @ts-expect-error icon */}
+            { Icon: ShieldCheck, title: "Regulation Grade", desc: "Every item meets official specifications and durability standards." },
+            { Icon: Target, title: "Precision Tailoring", desc: "Accurate fits for all ranks, sizes and unit requirements." },
+            { Icon: Users, title: "Trusted Supplier", desc: "Serving departments, NCC wings and agencies across Gujarat." },
+            { Icon: Award, title: "10+ Years", desc: "A decade of reliable service and a 4.4★ rating." },
+          ].map(({ Icon, title, desc }) => (
+            <div key={title} className="rounded-xl border border-border bg-card p-6 shadow-card">
               <Icon className="h-8 w-8 text-gold" />
               <h3 className="mt-4 font-display text-lg font-semibold text-foreground">{title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{desc}</p>
