@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UniformsRouteImport } from './routes/uniforms'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as ShoesRouteImport } from './routes/shoes'
 import { Route as SecurityUniformsRouteImport } from './routes/security-uniforms'
@@ -23,6 +24,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
 import { Route as AdminStockRouteImport } from './routes/admin.stock'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminProductsRouteImport } from './routes/admin.products'
 import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
 import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
@@ -30,6 +32,11 @@ import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 const UniformsRoute = UniformsRouteImport.update({
   id: '/uniforms',
   path: '/uniforms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ShopRoute = ShopRouteImport.update({
@@ -97,6 +104,11 @@ const AdminStockRoute = AdminStockRouteImport.update({
   path: '/stock',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminProductsRoute = AdminProductsRouteImport.update({
   id: '/products',
   path: '/products',
@@ -124,10 +136,12 @@ export interface FileRoutesByFullPath {
   '/security-uniforms': typeof SecurityUniformsRoute
   '/shoes': typeof ShoesRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/uniforms': typeof UniformsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/admin/products': typeof AdminProductsRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/stock': typeof AdminStockRoute
   '/product/$id': typeof ProductIdRoute
   '/admin/': typeof AdminIndexRoute
@@ -142,10 +156,12 @@ export interface FileRoutesByTo {
   '/security-uniforms': typeof SecurityUniformsRoute
   '/shoes': typeof ShoesRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/uniforms': typeof UniformsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/admin/products': typeof AdminProductsRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/stock': typeof AdminStockRoute
   '/product/$id': typeof ProductIdRoute
   '/admin': typeof AdminIndexRoute
@@ -162,10 +178,12 @@ export interface FileRoutesById {
   '/security-uniforms': typeof SecurityUniformsRoute
   '/shoes': typeof ShoesRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/uniforms': typeof UniformsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/admin/products': typeof AdminProductsRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/stock': typeof AdminStockRoute
   '/product/$id': typeof ProductIdRoute
   '/admin/': typeof AdminIndexRoute
@@ -183,10 +201,12 @@ export interface FileRouteTypes {
     | '/security-uniforms'
     | '/shoes'
     | '/shop'
+    | '/sitemap.xml'
     | '/uniforms'
     | '/admin/categories'
     | '/admin/orders'
     | '/admin/products'
+    | '/admin/settings'
     | '/admin/stock'
     | '/product/$id'
     | '/admin/'
@@ -201,10 +221,12 @@ export interface FileRouteTypes {
     | '/security-uniforms'
     | '/shoes'
     | '/shop'
+    | '/sitemap.xml'
     | '/uniforms'
     | '/admin/categories'
     | '/admin/orders'
     | '/admin/products'
+    | '/admin/settings'
     | '/admin/stock'
     | '/product/$id'
     | '/admin'
@@ -220,10 +242,12 @@ export interface FileRouteTypes {
     | '/security-uniforms'
     | '/shoes'
     | '/shop'
+    | '/sitemap.xml'
     | '/uniforms'
     | '/admin/categories'
     | '/admin/orders'
     | '/admin/products'
+    | '/admin/settings'
     | '/admin/stock'
     | '/product/$id'
     | '/admin/'
@@ -240,6 +264,7 @@ export interface RootRouteChildren {
   SecurityUniformsRoute: typeof SecurityUniformsRoute
   ShoesRoute: typeof ShoesRoute
   ShopRoute: typeof ShopRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UniformsRoute: typeof UniformsRoute
   ProductIdRoute: typeof ProductIdRoute
 }
@@ -251,6 +276,13 @@ declare module '@tanstack/react-router' {
       path: '/uniforms'
       fullPath: '/uniforms'
       preLoaderRoute: typeof UniformsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shop': {
@@ -344,6 +376,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminStockRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/products': {
       id: '/admin/products'
       path: '/products'
@@ -372,6 +411,7 @@ interface AdminRouteChildren {
   AdminCategoriesRoute: typeof AdminCategoriesRoute
   AdminOrdersRoute: typeof AdminOrdersRoute
   AdminProductsRoute: typeof AdminProductsRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminStockRoute: typeof AdminStockRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -380,6 +420,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminCategoriesRoute: AdminCategoriesRoute,
   AdminOrdersRoute: AdminOrdersRoute,
   AdminProductsRoute: AdminProductsRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminStockRoute: AdminStockRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
@@ -397,6 +438,7 @@ const rootRouteChildren: RootRouteChildren = {
   SecurityUniformsRoute: SecurityUniformsRoute,
   ShoesRoute: ShoesRoute,
   ShopRoute: ShopRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   UniformsRoute: UniformsRoute,
   ProductIdRoute: ProductIdRoute,
 }
