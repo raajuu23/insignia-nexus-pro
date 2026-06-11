@@ -119,7 +119,7 @@ export function ProductBrowser({
             >
               All
             </button>
-            {data.categories.map((c) => (
+            {visibleCategories.map((c) => (
               <button
                 key={c.id}
                 onClick={() => setActiveCat(c.slug)}
