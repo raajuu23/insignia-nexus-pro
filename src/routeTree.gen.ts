@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UniformsRouteImport } from './routes/uniforms'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as ShoesRouteImport } from './routes/shoes'
 import { Route as SecurityUniformsRouteImport } from './routes/security-uniforms'
@@ -31,6 +32,11 @@ import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 const UniformsRoute = UniformsRouteImport.update({
   id: '/uniforms',
   path: '/uniforms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ShopRoute = ShopRouteImport.update({
@@ -130,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/security-uniforms': typeof SecurityUniformsRoute
   '/shoes': typeof ShoesRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/uniforms': typeof UniformsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/orders': typeof AdminOrdersRoute
@@ -149,6 +156,7 @@ export interface FileRoutesByTo {
   '/security-uniforms': typeof SecurityUniformsRoute
   '/shoes': typeof ShoesRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/uniforms': typeof UniformsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/orders': typeof AdminOrdersRoute
@@ -170,6 +178,7 @@ export interface FileRoutesById {
   '/security-uniforms': typeof SecurityUniformsRoute
   '/shoes': typeof ShoesRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/uniforms': typeof UniformsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/orders': typeof AdminOrdersRoute
@@ -192,6 +201,7 @@ export interface FileRouteTypes {
     | '/security-uniforms'
     | '/shoes'
     | '/shop'
+    | '/sitemap.xml'
     | '/uniforms'
     | '/admin/categories'
     | '/admin/orders'
@@ -211,6 +221,7 @@ export interface FileRouteTypes {
     | '/security-uniforms'
     | '/shoes'
     | '/shop'
+    | '/sitemap.xml'
     | '/uniforms'
     | '/admin/categories'
     | '/admin/orders'
@@ -231,6 +242,7 @@ export interface FileRouteTypes {
     | '/security-uniforms'
     | '/shoes'
     | '/shop'
+    | '/sitemap.xml'
     | '/uniforms'
     | '/admin/categories'
     | '/admin/orders'
@@ -252,6 +264,7 @@ export interface RootRouteChildren {
   SecurityUniformsRoute: typeof SecurityUniformsRoute
   ShoesRoute: typeof ShoesRoute
   ShopRoute: typeof ShopRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UniformsRoute: typeof UniformsRoute
   ProductIdRoute: typeof ProductIdRoute
 }
@@ -263,6 +276,13 @@ declare module '@tanstack/react-router' {
       path: '/uniforms'
       fullPath: '/uniforms'
       preLoaderRoute: typeof UniformsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shop': {
@@ -418,9 +438,20 @@ const rootRouteChildren: RootRouteChildren = {
   SecurityUniformsRoute: SecurityUniformsRoute,
   ShoesRoute: ShoesRoute,
   ShopRoute: ShopRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   UniformsRoute: UniformsRoute,
   ProductIdRoute: ProductIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
