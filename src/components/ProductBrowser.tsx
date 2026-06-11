@@ -69,7 +69,7 @@ export function ProductBrowser({
     else if (sort === "high") list = [...list].sort((a, b) => price(b) - price(a));
     else list = [...list].sort((a, b) => b.createdAt - a.createdAt);
     return list;
-  }, [data.products, data.categories, q, activeCat, fixedCategorySlug, sort]);
+  }, [data.products, data.categories, q, activeCat, fixedCategorySlug, categorySlugs, sort]);
 
   return (
     <>
