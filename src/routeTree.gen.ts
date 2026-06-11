@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UniformsRouteImport } from './routes/uniforms'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as IndexRouteImport } from './routes/index'
 
+const UniformsRoute = UniformsRouteImport.update({
+  id: '/uniforms',
+  path: '/uniforms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
@@ -26,31 +32,42 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/shop': typeof ShopRoute
+  '/uniforms': typeof UniformsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/shop': typeof ShopRoute
+  '/uniforms': typeof UniformsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/shop': typeof ShopRoute
+  '/uniforms': typeof UniformsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/shop'
+  fullPaths: '/' | '/shop' | '/uniforms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/shop'
-  id: '__root__' | '/' | '/shop'
+  to: '/' | '/shop' | '/uniforms'
+  id: '__root__' | '/' | '/shop' | '/uniforms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ShopRoute: typeof ShopRoute
+  UniformsRoute: typeof UniformsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/uniforms': {
+      id: '/uniforms'
+      path: '/uniforms'
+      fullPath: '/uniforms'
+      preLoaderRoute: typeof UniformsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shop': {
       id: '/shop'
       path: '/shop'
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ShopRoute: ShopRoute,
+  UniformsRoute: UniformsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
