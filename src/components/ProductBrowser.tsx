@@ -9,6 +9,7 @@ export function ProductBrowser({
   title,
   subtitle,
   fixedCategorySlug,
+  categorySlugs,
   initialQuery = "",
   initialCategorySlug,
   showCategoryFilter = true,
@@ -16,6 +17,7 @@ export function ProductBrowser({
   title: string;
   subtitle?: string;
   fixedCategorySlug?: string;
+  categorySlugs?: string[];
   initialQuery?: string;
   initialCategorySlug?: string;
   showCategoryFilter?: boolean;
@@ -32,8 +34,22 @@ export function ProductBrowser({
     [data.categories],
   );
 
+  const visibleCategories = useMemo(
+    () =>
+      categorySlugs
+        ? data.categories.filter((c) => categorySlugs.includes(c.slug))
+        : data.categories,
+    [data.categories, categorySlugs],
+  );
+
   const filtered = useMemo(() => {
     let list = data.products.filter((p) => p.status === "active");
+    if (categorySlugs) {
+      const ids = new Set(
+        data.categories.filter((c) => categorySlugs.includes(c.slug)).map((c) => c.id),
+      );
+      list = list.filter((p) => ids.has(p.categoryId));
+    }
     const slug = fixedCategorySlug ?? activeCat;
     if (slug && slug !== "all") {
       const cat = data.categories.find((c) => c.slug === slug);
