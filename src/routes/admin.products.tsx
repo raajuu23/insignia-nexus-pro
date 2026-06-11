@@ -32,7 +32,7 @@ function ProductsAdmin() {
   };
 
   const onImage = async (file?: File) => {
-    if (file) setForm((f) => ({ ...f, image: await fileToDataUrl(file) }));
+    if (file) { const url = await fileToDataUrl(file); setForm((f) => ({ ...f, image: url })); }
   };
 
   return (
