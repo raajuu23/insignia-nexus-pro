@@ -14,6 +14,7 @@ import { Route as ShopRouteImport } from './routes/shop'
 import { Route as ShoesRouteImport } from './routes/shoes'
 import { Route as SecurityUniformsRouteImport } from './routes/security-uniforms'
 import { Route as NccRouteImport } from './routes/ncc'
+import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as AccessoriesRouteImport } from './routes/accessories'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
@@ -43,6 +44,11 @@ const NccRoute = NccRouteImport.update({
   path: '/ncc',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccessoriesRoute = AccessoriesRouteImport.update({
   id: '/accessories',
   path: '/accessories',
@@ -62,6 +68,7 @@ const ProductIdRoute = ProductIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accessories': typeof AccessoriesRoute
+  '/gallery': typeof GalleryRoute
   '/ncc': typeof NccRoute
   '/security-uniforms': typeof SecurityUniformsRoute
   '/shoes': typeof ShoesRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accessories': typeof AccessoriesRoute
+  '/gallery': typeof GalleryRoute
   '/ncc': typeof NccRoute
   '/security-uniforms': typeof SecurityUniformsRoute
   '/shoes': typeof ShoesRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/accessories': typeof AccessoriesRoute
+  '/gallery': typeof GalleryRoute
   '/ncc': typeof NccRoute
   '/security-uniforms': typeof SecurityUniformsRoute
   '/shoes': typeof ShoesRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/accessories'
+    | '/gallery'
     | '/ncc'
     | '/security-uniforms'
     | '/shoes'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/accessories'
+    | '/gallery'
     | '/ncc'
     | '/security-uniforms'
     | '/shoes'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/accessories'
+    | '/gallery'
     | '/ncc'
     | '/security-uniforms'
     | '/shoes'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccessoriesRoute: typeof AccessoriesRoute
+  GalleryRoute: typeof GalleryRoute
   NccRoute: typeof NccRoute
   SecurityUniformsRoute: typeof SecurityUniformsRoute
   ShoesRoute: typeof ShoesRoute
@@ -171,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NccRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accessories': {
       id: '/accessories'
       path: '/accessories'
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccessoriesRoute: AccessoriesRoute,
+  GalleryRoute: GalleryRoute,
   NccRoute: NccRoute,
   SecurityUniformsRoute: SecurityUniformsRoute,
   ShoesRoute: ShoesRoute,
