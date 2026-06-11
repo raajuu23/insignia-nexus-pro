@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UniformsRouteImport } from './routes/uniforms'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as ShoesRouteImport } from './routes/shoes'
+import { Route as NccRouteImport } from './routes/ncc'
 import { Route as IndexRouteImport } from './routes/index'
 
 const UniformsRoute = UniformsRouteImport.update({
@@ -29,6 +30,11 @@ const ShoesRoute = ShoesRouteImport.update({
   path: '/shoes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NccRoute = NccRouteImport.update({
+  id: '/ncc',
+  path: '/ncc',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +43,14 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ncc': typeof NccRoute
   '/shoes': typeof ShoesRoute
   '/shop': typeof ShopRoute
   '/uniforms': typeof UniformsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ncc': typeof NccRoute
   '/shoes': typeof ShoesRoute
   '/shop': typeof ShopRoute
   '/uniforms': typeof UniformsRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ncc': typeof NccRoute
   '/shoes': typeof ShoesRoute
   '/shop': typeof ShopRoute
   '/uniforms': typeof UniformsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/shoes' | '/shop' | '/uniforms'
+  fullPaths: '/' | '/ncc' | '/shoes' | '/shop' | '/uniforms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/shoes' | '/shop' | '/uniforms'
-  id: '__root__' | '/' | '/shoes' | '/shop' | '/uniforms'
+  to: '/' | '/ncc' | '/shoes' | '/shop' | '/uniforms'
+  id: '__root__' | '/' | '/ncc' | '/shoes' | '/shop' | '/uniforms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  NccRoute: typeof NccRoute
   ShoesRoute: typeof ShoesRoute
   ShopRoute: typeof ShopRoute
   UniformsRoute: typeof UniformsRoute
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShoesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ncc': {
+      id: '/ncc'
+      path: '/ncc'
+      fullPath: '/ncc'
+      preLoaderRoute: typeof NccRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  NccRoute: NccRoute,
   ShoesRoute: ShoesRoute,
   ShopRoute: ShopRoute,
   UniformsRoute: UniformsRoute,
