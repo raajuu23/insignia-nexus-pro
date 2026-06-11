@@ -15,6 +15,7 @@ import { Route as ShoesRouteImport } from './routes/shoes'
 import { Route as SecurityUniformsRouteImport } from './routes/security-uniforms'
 import { Route as NccRouteImport } from './routes/ncc'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AccessoriesRouteImport } from './routes/accessories'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -50,6 +51,11 @@ const GalleryRoute = GalleryRouteImport.update({
   path: '/gallery',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccessoriesRoute = AccessoriesRouteImport.update({
   id: '/accessories',
   path: '/accessories',
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/accessories': typeof AccessoriesRoute
+  '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/ncc': typeof NccRoute
   '/security-uniforms': typeof SecurityUniformsRoute
@@ -87,6 +94,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/accessories': typeof AccessoriesRoute
+  '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/ncc': typeof NccRoute
   '/security-uniforms': typeof SecurityUniformsRoute
@@ -100,6 +108,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/accessories': typeof AccessoriesRoute
+  '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/ncc': typeof NccRoute
   '/security-uniforms': typeof SecurityUniformsRoute
@@ -114,6 +123,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/accessories'
+    | '/contact'
     | '/gallery'
     | '/ncc'
     | '/security-uniforms'
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/accessories'
+    | '/contact'
     | '/gallery'
     | '/ncc'
     | '/security-uniforms'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/accessories'
+    | '/contact'
     | '/gallery'
     | '/ncc'
     | '/security-uniforms'
@@ -151,6 +163,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AccessoriesRoute: typeof AccessoriesRoute
+  ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
   NccRoute: typeof NccRoute
   SecurityUniformsRoute: typeof SecurityUniformsRoute
@@ -204,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalleryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accessories': {
       id: '/accessories'
       path: '/accessories'
@@ -239,6 +259,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AccessoriesRoute: AccessoriesRoute,
+  ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
   NccRoute: NccRoute,
   SecurityUniformsRoute: SecurityUniformsRoute,
@@ -250,3 +271,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
