@@ -12,4 +12,11 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  
+  // Naya part jo humne add kiya hai:
+  vite: {
+    preview: {
+      allowedHosts: true
+    }
+  }
 });
