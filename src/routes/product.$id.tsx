@@ -142,12 +142,11 @@ function ProductDetails() {
 
             <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
               {[
-                [ShieldCheck, "Regulation grade"],
-                [Truck, "Fast supply"],
-                [RotateCcw, "Easy exchange"],
-              ].map(([Icon, label], i) => (
-                <li key={i} className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-3 text-sm text-muted-foreground">
-                  {/* @ts-expect-error icon component */}
+                { Icon: ShieldCheck, label: "Regulation grade" },
+                { Icon: Truck, label: "Fast supply" },
+                { Icon: RotateCcw, label: "Easy exchange" },
+              ].map(({ Icon, label }) => (
+                <li key={label} className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-3 text-sm text-muted-foreground">
                   <Icon className="h-4 w-4 text-gold" /> {label}
                 </li>
               ))}
